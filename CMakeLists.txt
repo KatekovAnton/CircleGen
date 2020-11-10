@@ -43,6 +43,11 @@ include_directories (${LIBPNG_INCLUDE_DIRS})
 link_directories (${LIBPNG_LIBRARY_DIRS})
 link_libraries (${LIBPNG_LIBRARIES})
 
+if (DEFINED ZLIB_LIBRARY)
+link_directories (${ZLIB_LIBRARY_DIRS})
+link_libraries (${ZLIB_LIBRARY})
+endif()
+
 
 
 message(${PROJECT_SOURCE_DIR})

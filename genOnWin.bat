@@ -40,6 +40,6 @@ echo. & echo. & echo. & echo.
 echo Configuring CircleGen...
 mkdir build
 cd build
-call cmake -G "Visual Studio 16 2019" -T host=x64 -A x64 -DLIBPNG_INCLUDE_DIRS=%masterfolder%\libpng\build -DLIBPNG_LIBRARY_DIRS=%masterfolder%/libpng/build -DLIBPNG_LIBRARIES=libpng16_staticd.lib ..
+call cmake -G "Visual Studio 16 2019" -T host=x64 -A x64 -DLIBPNG_INCLUDE_DIRS=%masterfolder%\libpng\build -DZLIB_LIBRARY_DIRS=%masterfolder%/zlib/build/install/lib -DZLIB_LIBRARY=zlibstaticd.lib -DLIBPNG_LIBRARY_DIRS=%masterfolder%/libpng/build -DLIBPNG_LIBRARIES=libpng16_staticd.lib ..
 
 cd %masterfolder%
