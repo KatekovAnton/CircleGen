@@ -16,6 +16,7 @@ public:
     ~BitmapTexture();
     
     void setColor(Color color, int x, int y);
+    void setColor(float color, int x, int y);
     GSize2D getSize();
     Color *getColorBuffer();
     

@@ -23,6 +23,11 @@ void BitmapTexture::setColor(Color color, int x, int y)
     _buffer[y * (int)_size.width + x] = color;
 }
 
+void BitmapTexture::setColor(float color, int x, int y)
+{
+    setColor(Color((unsigned char)(color * 255.0f), (unsigned char)(color * 255.0f), (unsigned char)(color * 255.0f), 255), x, y);
+}
+
 GSize2D BitmapTexture::getSize()
 {
     return _size;

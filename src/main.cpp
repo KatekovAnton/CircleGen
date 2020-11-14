@@ -1,30 +1,58 @@
 #include <stdio.h>
 #include <iostream>
 #include "BitmapTexture.h"
+#include "NoiseGenerator.h"
+#include "Map.h"
+#include <time.h>
 
 
 
-void createTestImage(BitmapTexture *texture)
+void createTestImage(BitmapTexture *texture, float moreWater)
 {
-    for (int i = 0; i < texture->getSize().height; i++) {
-        texture->setColor(Color(255, 0, 0, 255), texture->getSize().width / 3, i);
+    PerlinNoise p(rand());
+    for (int x = 0; x < texture->getSize().width; x++) {
+        for (int y = 0; y < texture->getSize().height; y++) {
+            float n = p.noise((float)x / 30, (float)y / 30, 1);
+            n -= moreWater;
+            Color color;
+            if (n > 0.5) {
+                color = Color(255, 255, 255, 255);
+            }
+            else {
+                color = Color(128, 128, 255, 255);
+            }
+            texture->setColor(color, x, y);
+        }
+    }
+}
+
+void GenerateMaps(int offset, int count, float water)
+{
+    int width = 112;
+    int height = 112;
+    for (int i = offset; i < offset + count; i++) {
+        printf("Creating Image\n");
+        BitmapTexture texture(GSize2D(width, height));
+        createTestImage(&texture, water);
+
+        printf("Saving PNG\n");
+        std::string name = "result";
+        name += std::to_string(i);
+        name += ".png";
+        std::string title = "test image";
+        texture.Save(name, title);
     }
 }
 
 
 int main(int argc, char **argv)
 {
-    int width = 500;
-    int height = 300;
-
-    printf("Creating Image\n");
-    BitmapTexture texture(GSize2D(width, height));
-    createTestImage(&texture);
-
-    printf("Saving PNG\n");
-    std::string name = "result.png";
-    std::string title = "test image";
-    texture.Save(name, title);
+    time_t t;
+    srand((unsigned) time(&t));
+    
+    GenerateMaps(0, 10, 0);
+    GenerateMaps(10, 10, 0.1);
+    GenerateMaps(20, 10, -0.1);
     return 0;
 }
 
