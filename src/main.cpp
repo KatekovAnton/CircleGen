@@ -34,6 +34,8 @@ void GenerateMaps(int offset, int count, float water)
         printf("Creating Image\n");
         BitmapTexture texture(GSize2D(width, height));
         createTestImage(&texture, water);
+        
+        texture.DrawLine(GPoint2D(10, 10), GPoint2D(100, 50), __Color(10, 10, 100, 255));
 
         printf("Saving PNG\n");
         std::string name = "result";

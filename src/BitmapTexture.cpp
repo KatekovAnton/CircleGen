@@ -2,6 +2,8 @@
 #include <stdio.h>
 #include <iostream>
 #include <png.h>
+#include <cstring>
+#include <string.h>
 
 
 
@@ -36,6 +38,17 @@ GSize2D BitmapTexture::getSize()
 Color *BitmapTexture::getColorBuffer()
 {
     return _buffer;
+}
+
+void BitmapTexture::DrawLine(const GPoint2D &from, const GPoint2D &to, const Color &color)
+{
+    auto line = GUtils::CalculateLine(from, to);
+    GRect2D bounds(0, 0, _size.width, _size.height);
+    for (int i = 0; i < line.size(); i++) {
+        if (bounds.ContainsPoint(line[i])) {
+            setColor(color, line[i].x, line[i].y);
+        }
+    }
 }
 
 inline void setRGB(png_byte *ptr, const Color &c)
